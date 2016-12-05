@@ -17,7 +17,6 @@
 
 	if (!$) {throw 'not jQuery';}
 
-
 	// 跟$.when相反。任意一个promise resolve时resolve，then的参数是resolve的数据。
 	// 全部reject时reject，then的参数是一个包含全部错误信息的数组，错误信息按照顺序排列。
 	$.any = function() {
