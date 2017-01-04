@@ -24,7 +24,9 @@
 
 在js中定义规则和提示
 ```javascript
+// 实例化出一个Verify实例
 var formVerify = new Verify('#myform', {
+	// 给该实例扩展规则
 	rules: {
 		// 检查用户名的唯一性
 		checkNameUniqueness: function(input) {
@@ -47,7 +49,7 @@ var formVerify = new Verify('#myform', {
 formVerify.$form.on('submit', function() {
 	// 进行表单验证，验证通过的话用ajax提交表单内容
 	formVerify.check().then(function() {
-		$.post(this.action, $(this).serializeArray())
+		$.post(formVerify.$form.attr('action'), formVerify.$form.serializeArray())
 	});
 
 	return false;
@@ -96,14 +98,12 @@ new Verify('#myform', {
 其中`fn`中进行了表单验证，验证通过后调用`onSubmit`，验证失败调用`onIntercept`。
 
 ## UI界面
-verify.js虽然没有处理UI，但是暴露了相关接口协助开发者去处理。关键三个钩子函数：
+verify.js虽然没有处理UI，但是暴露了相关接口协助开发者去处理。关键的三个钩子函数：
 onError：控件验证错误时调用
 onPass：控件验证通过时调用
 onGlobalError：只有调用`check()`来验证表单时才会触发。触发于首个错误的控件触发`onError`后。
 
 所以三个钩子函数的触发机制是这样的（以调用`check()`为例）：首个错误的控件触发`onError`后，触发`onGlobalError`，继而触发其他控件的`onPass`或`onError`。
-
----
 
 来看看verify.js默认对UI界面的简单处理：
 ```javascript
